@@ -1,4 +1,4 @@
-# **littercat** <span style="color:gray;">.shop</span>
+# **littercat.shop**
 ![littercat](https://cdn.discordapp.com/attachments/1292920320734269570/1354127795575328838/asoso_1.png?ex=67e42948&is=67e2d7c8&hm=c171c8b4b644cca313be5234f461cd0ab26fae8018ece040cdb21d1df04491ca&)
 
 littercat is a multi-web app platform for file hosting, wake locking, and more.  
