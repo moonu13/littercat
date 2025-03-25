@@ -12,7 +12,7 @@ $username = htmlspecialchars($_SESSION["username"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>files - littercat.shop</title>
+    <title>files, littercat</title>
     <style>
         body {
             background: #100e0f url('content/background.svg') no-repeat center center fixed;
