@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nosleep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #110e0f;
+            color: #ffe7f3;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #181416;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            width: 300px;
+            position: relative;
+        }
+        .home-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+        }
+        .title {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        video {
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="home.svg" alt="home" class="home-icon">
+        <p class="title">nosleep</p>
+        <p class="subtitle">ur now stuck in the void</p>
+    </div>
+    
+    <video autoplay loop muted playsinline>
+        <source src="data:video/mp4;base64,AAAAIGZ0eXBtcDQyAAACAGlzb21tcDQyAAABfG1vb3YAAABsbXZoZAAAAAB8AAABGgAAAGV0cmFrAAAAXHRraGQAAAADAAAAAAAAAAEAAAGFbWRpYQAAACBtZGhkAAAAAQAAAAAAAAAIAAAACQABAAABGgAAAAx0cmFrAAAAXHRraGQAAAADAAAAAAAAAAEAAAGFbXZleAAAAAfAAABGgAAABFkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAARdtZGF0AAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAAA=" type="video/mp4">
+    </video>
+
+    <script>
+        let wakeLock = null;
+
+        async function keepAwake() {
+            try {
+                wakeLock = await navigator.wakeLock.request("screen");
+            } catch (err) {
+                console.error("Wake Lock failed:", err);
+            }
+        }
+
+        document.addEventListener("visibilitychange", () => {
+            if (wakeLock !== null && document.visibilityState === "visible") {
+                keepAwake();
+            }
+        });
+
+        keepAwake();
+    </script>
+</body>
+</html>
