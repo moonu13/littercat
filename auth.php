@@ -14,10 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($users[$username]) && $users[$username] === $password) {
         $_SESSION["loggedin"] = true;
         $_SESSION["username"] = $username;
-        header("Location: files.php");
+        header("Location: home");
         exit;
     } else {
-        header("Location: login.php?error=invalid");
+        header("Location: login?error=invalidauth");
         exit;
     }
 } else {

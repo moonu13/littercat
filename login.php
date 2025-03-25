@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header("Location: files");
+    header("Location: home");
     exit;
 }
 ?>
@@ -71,15 +71,15 @@ body::before {
             color: #ffd5ea;
             border: none;
             padding: 8px;
-            width: 80%;
+            width: 60%;
             border-radius: 10px;
-            cursor: pointer;
+            cursor: grab;
             transition: 0.3s;
             font-size: 14px;
             font-family: 'Outfit', sans-serif;
         }
         .login-btn:hover {
-            background: #ff6eb6;
+            background:rgb(63, 56, 60);
         }
         .footer {
             margin-top: 10px;
@@ -93,9 +93,9 @@ body::before {
     <div class="login-container">
         <h2>littercat.shop</h2>
         <form action="auth.php" method="post">
-            <input type="text" name="username" class="input-box" placeholder="username">
-            <input type="password" name="password" class="input-box" placeholder="password">
-            <button type="submit" class="login-btn">login</button>
+            <input type="text" name="username" class="input-box" placeholder="user">
+            <input type="password" name="password" class="input-box" placeholder="token">
+            <button type="submit" class="login-btn">Authenticate</button>
         </form>
         <div class="footer">littercat.shop © 2025 rights reversed</div>
     </div>

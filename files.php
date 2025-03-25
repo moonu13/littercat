@@ -19,75 +19,68 @@ $username = htmlspecialchars($_SESSION["username"]);
             background-size: cover;
             font-family: 'Outfit', sans-serif;
             color: #ffd5ea;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background: #1f181c;
-            padding: 20px;
-            border-radius: 15px;
-            width: 300px;
-            text-align: center;
-            border: 3px solid #ff6eb6;
         }
 
         .header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 20px;
+            justify-content: space-between;
+            width: 100%;
         }
 
-        .header img {
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .user-info img {
             width: 30px;
             height: 30px;
         }
 
-        .upload-section {
-            margin-top: 15px;
+        .logout-btn img {
+            width: 40px;
+            height: 40px;
+            display: block;
         }
 
         .upload-btn {
-            background: #42323a;
-            color: #ffd5ea;
+            background:rgb(44, 37, 41);
+            border-radius: 16px;
             border: none;
-            padding: 10px;
-            border-radius: 10px;
             cursor: pointer;
-            width: 100%;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            margin-top: 10px;
         }
 
-        .upload-btn:hover {
-            background: #5a3f50;
-        }
-
-        .drop-zone {
-            margin-top: 15px;
-            border: 2px dashed #ff6eb6;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            color: #ffd5ea;
+        .upload-btn img {
+            width: 30px;
+            height: 30px;
+            display: block;
         }
 
         .file-list {
-            margin-top: 15px;
-            max-height: 200px;
+            margin-top: 20px;
+            flex-grow: 1;
             overflow-y: auto;
         }
 
         .file-item {
-            background: #42323a;
+            background:rgb(32, 29, 30);
             padding: 10px;
             margin: 5px 0;
-            border-radius: 10px;
-            text-align: left;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -96,30 +89,33 @@ $username = htmlspecialchars($_SESSION["username"]);
         .file-item img {
             width: 30px;
             height: 30px;
-            border-radius: 5px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
+    <div class="header">
+        <div class="user-info">
             <img src="peace-sign.svg" alt="👋">
-            <span>Hello, <?php echo $username; ?>!</span>
+            <span>, <?php echo $username; ?>!</span>
         </div>
+        <a href="logout.php" class="logout-btn">
+            <img src="logout.svg" alt="Logout">
+        </a>
+    </div>
 
-        <div class="upload-section">
-            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Upload File</button>
-            <input type="file" id="fileInput" style="display: none;">
-        </div>
+    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+        <img src="upload.svg" alt="Upload">
+    </button>
+    <input type="file" id="fileInput" style="display: none;">
 
-        <div class="drop-zone" id="dropZone">
-            Drag & Drop files here
-        </div>
-
-        <div class="file-list">
-            <?php
-            $files = array_diff(scandir("uploads"), array('.', '..'));
+    <div class="file-list">
+        <?php
+        $files = array_diff(scandir("uploads"), array('.', '..'));
+        if (empty($files)) {
+            echo "<p>No files found. >:c</p>";
+        } else {
             foreach ($files as $file) {
                 echo '<div class="file-item">';
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
@@ -130,30 +126,11 @@ $username = htmlspecialchars($_SESSION["username"]);
                 }
                 echo '<span>' . htmlspecialchars($file) . '</span></div>';
             }
-            ?>
-        </div>
+        }
+        ?>
     </div>
 
     <script>
-        document.getElementById("dropZone").addEventListener("dragover", function(event) {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = "copy";
-        });
-
-        document.getElementById("dropZone").addEventListener("drop", function(event) {
-            event.preventDefault();
-            let files = event.dataTransfer.files;
-            let formData = new FormData();
-            formData.append("file", files[0]);
-
-            fetch("upload.php", {
-                method: "POST",
-                body: formData
-            }).then(response => response.text()).then(data => {
-                location.reload();
-            });
-        });
-
         document.getElementById("fileInput").addEventListener("change", function() {
             let formData = new FormData();
             formData.append("file", this.files[0]);
